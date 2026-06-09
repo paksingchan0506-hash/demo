@@ -1,0 +1,6 @@
+-keep class javax.lang.model.** { *; }
+-dontwarn javax.lang.model.**
+-keep class com.google.auto.value.** { *; }
+-dontwarn com.google.auto.value.**
+-keep class autovalue.shaded.com.squareup.javapoet.** { *; }
+-dontwarn autovalue.shaded.com.squareup.javapoet.**
