@@ -826,47 +826,253 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
     );
   }
 }
-
-class _MaskOptionsRow extends StatelessWidget {
+class _MaskOptionsRow extends StatefulWidget {
   final String selected;
   final ValueChanged<String> onSelect;
 
   const _MaskOptionsRow({required this.selected, required this.onSelect});
 
   @override
+  State<_MaskOptionsRow> createState() => _MaskOptionsRowState();
+}
+
+class _MaskOptionsRowState extends State<_MaskOptionsRow> {
+  bool _isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Row(
+    if (!_isExpanded) {
+      return Row(
+        children: [
+          Expanded(
+            child: _MaskOptionCard(
+              label: '',
+              value: 'mask',
+              selected: widget.selected == 'mask',
+              assetName: 'assets/masks/mask_logo.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () => widget.onSelect('mask'),
+            ),
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child: _MaskOptionCard(
+              label: '',
+              value: 'full_face',
+              selected: widget.selected == 'full_face',
+              assetName: 'assets/masks/full_face_logo.png',
+              fallbackPreview: _MaskPreview.fullFace(),
+              onTap: () => widget.onSelect('full_face'),
+            ),
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child: _MaskOptionCard(
+              label: '',
+              value: 'upper_face',
+              selected: widget.selected == 'upper_face',
+              assetName: 'assets/masks/upper_face_logo.png',
+              fallbackPreview: _MaskPreview.upperFace(),
+              onTap: () => widget.onSelect('upper_face'),
+            ),
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child: _MaskOptionCard(
+              label: '',
+              value: 'pig',
+              selected: widget.selected == 'pig',
+              assetName: 'assets/masks/pig_mask.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () => widget.onSelect('pig'),
+            ),
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child: _MaskOptionCard(
+              label: '',
+              value: 'monkey',
+              selected: widget.selected == 'monkey',
+              assetName: 'assets/masks/monkey__mask.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () => widget.onSelect('monkey'),
+            ),
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child: InkWell(
+              onTap: () => setState(() => _isExpanded = true),
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                height: 48,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: ['penguin', 'elephant', 'tiger', 'panda'].contains(widget.selected)
+                        ? Colors.purpleAccent
+                        : Colors.grey.shade300,
+                    width: 2,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: _AssetWithFallback(
+                          assetName: widget.selected == 'elephant'
+                              ? 'assets/masks/mask_elephant.png'
+                              : widget.selected == 'tiger'
+                                  ? 'assets/masks/mask_tiger.png'
+                                  : widget.selected == 'panda'
+                                      ? 'assets/masks/mask_panda.png'
+                                      : 'assets/masks/penguin_mask.png',
+                          fallback: _MaskPreview.mask(),
+                        ),
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.purpleAccent,
+                      size: 16,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Column(
       children: [
-        Expanded(
-          child: _MaskOptionCard(
-            label: '口罩',
-            value: 'mask',
-            selected: selected == 'mask',
-            assetName: 'assets/masks/mask_logo.png',
-            fallbackPreview: _MaskPreview.mask(),
-            onTap: () => onSelect('mask'),
-          ),
+        GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 6,
+          crossAxisSpacing: 4,
+          mainAxisSpacing: 4,
+          children: [
+            _MaskOptionCard(
+              label: '',
+              value: 'mask',
+              selected: widget.selected == 'mask',
+              assetName: 'assets/masks/mask_logo.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () {
+                widget.onSelect('mask');
+                setState(() => _isExpanded = false);
+              },
+            ),
+            _MaskOptionCard(
+              label: '',
+              value: 'full_face',
+              selected: widget.selected == 'full_face',
+              assetName: 'assets/masks/full_face_logo.png',
+              fallbackPreview: _MaskPreview.fullFace(),
+              onTap: () {
+                widget.onSelect('full_face');
+                setState(() => _isExpanded = false);
+              },
+            ),
+            _MaskOptionCard(
+              label: '',
+              value: 'upper_face',
+              selected: widget.selected == 'upper_face',
+              assetName: 'assets/masks/upper_face_logo.png',
+              fallbackPreview: _MaskPreview.upperFace(),
+              onTap: () {
+                widget.onSelect('upper_face');
+                setState(() => _isExpanded = false);
+              },
+            ),
+            _MaskOptionCard(
+              label: '',
+              value: 'pig',
+              selected: widget.selected == 'pig',
+              assetName: 'assets/masks/pig_mask.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () {
+                widget.onSelect('pig');
+                setState(() => _isExpanded = false);
+              },
+            ),
+            _MaskOptionCard(
+              label: '',
+              value: 'monkey',
+              selected: widget.selected == 'monkey',
+              assetName: 'assets/masks/monkey__mask.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () {
+                widget.onSelect('monkey');
+                setState(() => _isExpanded = false);
+              },
+            ),
+            _MaskOptionCard(
+              label: '',
+              value: 'penguin',
+              selected: widget.selected == 'penguin',
+              assetName: 'assets/masks/penguin_mask.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () {
+                widget.onSelect('penguin');
+                setState(() => _isExpanded = false);
+              },
+            ),
+            _MaskOptionCard(
+              label: '',
+              value: 'elephant',
+              selected: widget.selected == 'elephant',
+              assetName: 'assets/masks/mask_elephant.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () {
+                widget.onSelect('elephant');
+                setState(() => _isExpanded = false);
+              },
+            ),
+            _MaskOptionCard(
+              label: '',
+              value: 'tiger',
+              selected: widget.selected == 'tiger',
+              assetName: 'assets/masks/mask_tiger.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () {
+                widget.onSelect('tiger');
+                setState(() => _isExpanded = false);
+              },
+            ),
+            _MaskOptionCard(
+              label: '',
+              value: 'panda',
+              selected: widget.selected == 'panda',
+              assetName: 'assets/masks/mask_panda.png',
+              fallbackPreview: _MaskPreview.mask(),
+              onTap: () {
+                widget.onSelect('panda');
+                setState(() => _isExpanded = false);
+              },
+            ),
+          ],
         ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: _MaskOptionCard(
-            label: '全臉面具',
-            value: 'full_face',
-            selected: selected == 'full_face',
-            assetName: 'assets/masks/full_face_logo.png',
-            fallbackPreview: _MaskPreview.fullFace(),
-            onTap: () => onSelect('full_face'),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: _MaskOptionCard(
-            label: '半臉面具',
-            value: 'upper_face',
-            selected: selected == 'upper_face',
-            assetName: 'assets/masks/upper_face_logo.png',
-            fallbackPreview: _MaskPreview.upperFace(),
-            onTap: () => onSelect('upper_face'),
+        const SizedBox(height: 8),
+        InkWell(
+          onTap: () => setState(() => _isExpanded = false),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '收起面具',
+                style: TextStyle(color: Colors.purpleAccent, fontSize: 12),
+              ),
+              Icon(
+                Icons.arrow_drop_up,
+                color: Colors.purpleAccent,
+                size: 16,
+              ),
+            ],
           ),
         ),
       ],
@@ -874,59 +1080,7 @@ class _MaskOptionsRow extends StatelessWidget {
   }
 }
 
-class _MaskOptionCard extends StatelessWidget {
-  final String label;
-  final String value;
-  final bool selected;
-  final String assetName;
-  final Widget fallbackPreview;
-  final VoidCallback onTap;
 
-  const _MaskOptionCard({
-    required this.label,
-    required this.value,
-    required this.selected,
-    required this.assetName,
-    required this.fallbackPreview,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final borderColor = selected ? Colors.purpleAccent : Colors.grey.shade300;
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: borderColor, width: 2),
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.white,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: _AssetWithFallback(
-                assetName: assetName,
-                fallback: fallbackPreview,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              label,
-              style: TextStyle(
-                color: selected ? Colors.purpleAccent : Colors.black87,
-                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _AssetWithFallback extends StatelessWidget {
   final String assetName;
@@ -1058,4 +1212,47 @@ class _PreviewPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+class _MaskOptionCard extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool selected;
+  final String assetName;
+  final Widget fallbackPreview;
+  final VoidCallback onTap;
+
+  const _MaskOptionCard({
+    required this.label,
+    required this.value,
+    required this.selected,
+    required this.assetName,
+    required this.fallbackPreview,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        height: 48,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: selected ? Colors.purpleAccent : Colors.grey.shade300,
+            width: selected ? 2 : 1,
+          ),
+        ),
+        padding: const EdgeInsets.all(4.0),
+        child: Center(
+          child: _AssetWithFallback(
+            assetName: assetName,
+            fallback: fallbackPreview,
+          ),
+        ),
+      ),
+    );
+  }
 }
